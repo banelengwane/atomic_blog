@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { faker } from "@faker-js/faker";
 
 function createRandomPost() {
@@ -46,4 +46,12 @@ function PostProvider({children}){
       )
 }
 
-export {PostProvider, PostContext};
+//creating a hook
+function usePosts(){
+    const context = useContext(PostContext);
+    // prevent user from accessing the context outside of where if can be provided
+    if(context === undefined) throw new Error("PostContext was used outside the PostProvider");
+    return context;
+}
+
+export {PostProvider, usePosts};
